@@ -1,7 +1,12 @@
+requires "Carp" => "0";
+requires "JSON" => "0";
+requires "Moo" => "0";
+requires "namespace::clean" => "0";
 requires "strict" => "0";
 requires "warnings" => "0";
 
 on 'test' => sub {
+  requires "Test::Fatal" => "0";
   requires "Test::More" => "0";
 };
 
