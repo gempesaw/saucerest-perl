@@ -10,6 +10,19 @@ BEGIN: {
     }
 }
 
+CLIENT: {
+    my $c = WWW::Saucelabs->new(
+        username => 'user',
+        access_key => 'access'
+    );
+    ok($c->_client->isa('Net::HTTP::Knork'), 'we can build a knork');
+
+    my $methods = $c->_spec->{methods};
+    foreach (keys %$methods) {
+        ok($c->can($_), 'spec methods are properly handled by the client');
+    }
+}
+
 BASE_URL: {
     my $c = WWW::Saucelabs->new(
         username => 'user',

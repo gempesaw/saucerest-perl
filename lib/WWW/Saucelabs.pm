@@ -3,6 +3,7 @@ use warnings;
 package WWW::Saucelabs;
 
 # ABSTRACT: A perl client to the Saucelabs REST API (WIP)
+use Net::HTTP::Knork;
 use Carp qw/croak/;
 use JSON qw/to_json/;
 use Moo;
@@ -120,6 +121,21 @@ has _spec => (
 
         return $spec;
     }
+);
+
+has _client => (
+  is => 'ro',
+  lazy => 1,
+  handles => [ keys $spec->{methods} ],
+  builder => sub {
+      my ($self) = @_;
+
+      my $knork = Net::HTTP::Knork->new(
+          spec => to_json($self->_spec),
+      );
+
+      return $knork;
+  }
 );
 
 1;

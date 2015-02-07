@@ -1,6 +1,7 @@
 requires "Carp" => "0";
 requires "JSON" => "0";
 requires "Moo" => "0";
+requires "Net::HTTP::Knork" => "0";
 requires "namespace::clean" => "0";
 requires "strict" => "0";
 requires "warnings" => "0";
