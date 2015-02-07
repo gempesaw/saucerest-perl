@@ -12,14 +12,14 @@ version 0.01
 
 # ATTRIBUTES
 
-## username
+## user
 
-REQUIRED: pass in your Saucelabs username. Alternatively, you can
+REQUIRED: pass in your Saucelabs user. Alternatively, you can
 export it to the environment variable SAUCE\_USER in place of
 specifying it during construction.
 
 If there's no SAUCE\_USER environment variable, and you neglect to
-specify the username during construciton, we will croak.
+specify the user during construciton, we will croak.
 
 ## access\_key
 
@@ -28,7 +28,7 @@ export it to the environment variable SAUCE\_ACCESS\_KEY in place of
 specifying it during construction.
 
 If there's no SAUCE\_ACCESS\_KEY environment variable, and you neglect to
-specify the username during construciton, we will croak.
+specify the access\_key during construciton, we will croak.
 
 ## trace
 

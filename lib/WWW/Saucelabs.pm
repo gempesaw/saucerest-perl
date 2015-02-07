@@ -15,25 +15,25 @@ use namespace::clean;
 
 =cut
 
-=attr username
+=attr user
 
-REQUIRED: pass in your Saucelabs username. Alternatively, you can
+REQUIRED: pass in your Saucelabs user. Alternatively, you can
 export it to the environment variable SAUCE_USER in place of
 specifying it during construction.
 
 If there's no SAUCE_USER environment variable, and you neglect to
-specify the username during construciton, we will croak.
+specify the user during construciton, we will croak.
 
 =cut
 
-has username => (
+has user => (
     is => 'ro',
     default => sub {
         if (exists $ENV{SAUCE_USER} && $ENV{SAUCE_USER}) {
             return $ENV{SAUCE_USER};
         }
         else {
-            croak 'You must specify a username, or set the environment variable SAUCE_USER';
+            croak 'You must specify a user, or set the environment variable SAUCE_USER';
         }
     }
 );
@@ -45,7 +45,7 @@ export it to the environment variable SAUCE_ACCESS_KEY in place of
 specifying it during construction.
 
 If there's no SAUCE_ACCESS_KEY environment variable, and you neglect to
-specify the username during construciton, we will croak.
+specify the access_key during construciton, we will croak.
 
 =cut
 
@@ -69,29 +69,29 @@ my $spec = {
     methods => {
         get_job_assets => {
             method => 'GET',
-            required_params => [ 'username', 'job_id' ],
-            path => '/:username/jobs/:job_id/assets',
+            required_params => [ 'user', 'job_id' ],
+            path => '/:user/jobs/:job_id/assets',
         },
         get_job_status => {
             method => 'GET',
-            required_params => [ 'username', 'job_id' ],
-            path => '/:username/jobs/job_id'
+            required_params => [ 'user', 'job_id' ],
+            path => '/:user/jobs/job_id'
         },
         get_jobs => {
             method => 'GET',
-            required_params => [ 'username' ],
+            required_params => [ 'user' ],
             optional_params => [ 'limit'    ],
-            path => '/:username/jobs',
+            path => '/:user/jobs',
         },
         get_sauce_status => {
             method => 'GET',
-            required_params => [ 'username' ],
+            required_params => [ 'user' ],
             path => '/info/status',
         },
         set_job_status => {
             method => 'PUT',
-            required_params => [ 'username', 'job_id', 'status' ],
-            path => '/:username/jobs/:job_id'
+            required_params => [ 'user', 'job_id', 'status' ],
+            path => '/:user/jobs/:job_id'
         },
     }
 };
@@ -103,7 +103,7 @@ has _base_url => (
     builder => sub {
         my ($self) = @_;
 
-        my $base_url = 'https://' . $self->username . ':' . $self->access_key;
+        my $base_url = 'https://' . $self->user . ':' . $self->access_key;
         $base_url .= '@saucelabs.com/rest/v1';
 
         return $base_url;

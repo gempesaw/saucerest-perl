@@ -12,7 +12,7 @@ BEGIN: {
 
 CLIENT: {
     my $c = WWW::Saucelabs->new(
-        username => 'user',
+        user => 'user',
         access_key => 'access'
     );
     ok($c->_client->isa('Net::HTTP::Knork'), 'we can build a knork');
@@ -25,7 +25,7 @@ CLIENT: {
 
 BASE_URL: {
     my $c = WWW::Saucelabs->new(
-        username => 'user',
+        user => 'user',
         access_key => 'access'
     );
 
@@ -50,20 +50,20 @@ AUTHENTICATION: {
     $ENV{SAUCE_ACCESS_KEY} = 'fake-access-key';
     my $env_client;
     is(exception { $env_client = WWW::Saucelabs->new }, undef, 'can get setup solely from env vars');
-    is($env_client->username, 'fake-sauce-user', 'constructor overrides env username');
+    is($env_client->user, 'fake-sauce-user', 'constructor overrides env user');
     is($env_client->access_key, 'fake-access-key', 'constructor overrides env access key');
 
     %ENV = %reset_env;
     my $client;
     is(exception {
         $client = WWW::Saucelabs->new(
-            username => 'username',
+            user => 'user',
             access_key => 'access-key'
         );
     },
        undef,
        'can get set up solely from instantiation');
-    is($client->username, 'username', 'constructor overrides env username');
+    is($client->user, 'user', 'constructor overrides env user');
     is($client->access_key, 'access-key', 'constructor overrides env access key');
 }
 
