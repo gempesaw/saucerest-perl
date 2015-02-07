@@ -109,4 +109,17 @@ has _base_url => (
     }
 );
 
+has _spec => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    default => sub {
+        my ($self) = @_;
+
+        $spec->{base_url} = $self->_base_url;
+
+        return $spec;
+    }
+);
+
 1;

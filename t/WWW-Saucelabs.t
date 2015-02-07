@@ -18,6 +18,7 @@ BASE_URL: {
 
     my $expected_url = 'https://user:access@saucelabs.com/rest/v1';
     is($c->_base_url, $expected_url, 'we construct the base url correctly');
+    is($c->_spec->{base_url}, $expected_url, 'and put it on the spec');
 }
 
 AUTHENTICATION: {
