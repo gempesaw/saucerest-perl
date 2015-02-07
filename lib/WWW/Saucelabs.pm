@@ -59,4 +59,39 @@ has access_key => (
         }
     }
 );
+
+
+my $spec = {
+    name => 'Saucelabs REST API',
+    formats => [ 'json' ],
+    version => '0.1',
+    methods => {
+        get_job_assets => {
+            method => 'GET',
+            required_params => [ 'username', 'job_id' ],
+            path => '/:username/jobs/:job_id/assets',
+        },
+        get_job_status => {
+            method => 'GET',
+            required_params => [ 'username', 'job_id' ],
+            path => '/:username/jobs/job_id'
+        },
+        get_jobs => {
+            method => 'GET',
+            required_params => [ 'username' ],
+            optional_params => [ 'limit'    ],
+            path => '/:username/jobs',
+        },
+        get_sauce_status => {
+            method => 'GET',
+            required_params => [ 'username' ],
+            path => '/info/status',
+        },
+        set_job_status => {
+            method => 'PUT',
+            required_params => [ 'username', 'job_id', 'status' ],
+            path => '/:username/jobs/:job_id'
+        },
+    }
+};
 1;
