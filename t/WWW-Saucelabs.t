@@ -3,12 +3,21 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-
 BEGIN: {
     unless (use_ok('WWW::Saucelabs')) {
         BAIL_OUT("Couldn't load WWW-Saucelabs");
         exit;
     }
+}
+
+BASE_URL: {
+    my $c = WWW::Saucelabs->new(
+        username => 'user',
+        access_key => 'access'
+    );
+
+    my $expected_url = 'https://user:access@saucelabs.com/rest/v1';
+    is($c->_base_url, $expected_url, 'we construct the base url correctly');
 }
 
 AUTHENTICATION: {
@@ -43,6 +52,5 @@ AUTHENTICATION: {
     is($client->username, 'username', 'constructor overrides env username');
     is($client->access_key, 'access-key', 'constructor overrides env access key');
 }
-
 
 done_testing;

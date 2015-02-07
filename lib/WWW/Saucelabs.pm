@@ -94,4 +94,19 @@ my $spec = {
         },
     }
 };
+
+has _base_url => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => sub {
+        my ($self) = @_;
+
+        my $base_url = 'https://' . $self->username . ':' . $self->access_key;
+        $base_url .= '@saucelabs.com/rest/v1';
+
+        return $base_url;
+    }
+);
+
 1;
