@@ -176,4 +176,18 @@ describe 'Authentication' => sub {
     };
 };
 
+describe 'E2E' => sub {
+    # $ export SAUCE_USERNAME=your-sauce-user
+    # $ export SAUCE_ACCESS_KEY=your-sauce-access-key
+    my $sauce;
+
+    before each => sub { $sauce = WWW::Saucelabs->new; };
+
+    it 'should get a list of jobs' => sub {
+        my $jobs = $sauce->get_jobs({limit => 5 });
+        print $jobs->to_string;
+        ok(scalar $jobs);
+    };
+};
+
 runtests;
