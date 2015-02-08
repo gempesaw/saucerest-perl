@@ -128,6 +128,7 @@ has _client => (
 
       my $knork = Net::HTTP::Knork->new(
           spec => to_json($self->_spec),
+          client => $self->_ua,
           default_params => {
               user => $self->user
           }
@@ -135,6 +136,11 @@ has _client => (
 
       return $knork;
   }
+);
+
+has _ua => (
+    is => 'ro',
+    default => sub { LWP::UserAgent->new }
 );
 
 1;

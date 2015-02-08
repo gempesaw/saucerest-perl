@@ -1,7 +1,9 @@
 use strict;
 use warnings;
-use Test::More;
+
+use Test::LWP::UserAgent;
 use Test::Fatal;
+use Test::More;
 
 BEGIN: {
     unless (use_ok('WWW::Saucelabs')) {
@@ -11,15 +13,38 @@ BEGIN: {
 }
 
 CLIENT: {
+    my $tua = Test::LWP::UserAgent->new;
+    my $return_endpoint = sub {
+        my ($req) = @_;
+        my $res = Net::HTTP::Knork::Response->new('200','OK');
+        $res->request( $req );
+        return $res;
+    };
+
+    $tua->map_response(1, $return_endpoint);
+
     my $c = WWW::Saucelabs->new(
         user => 'user',
-        access_key => 'access'
+        access_key => 'access-key',
+        _ua => $tua
     );
     ok($c->_client->isa('Net::HTTP::Knork'), 'we can build a knork');
 
     my $methods = $c->_spec->{methods};
     foreach (keys %$methods) {
-        ok($c->can($_), 'spec methods are properly handled by the client');
+        ok($c->can($_), 'all spec methods are properly handled by the client');
+    }
+
+    my $no_auth_endpoints = {
+        get_sauce_status => 'http://saucelabs.com/rest/v1/info/status'
+    };
+
+    foreach (keys %$no_auth_endpoints) {
+        my $res = $c->$_;
+        my $endpoint = $res->request->uri->as_string;;
+        my $expected = $no_auth_endpoints->{$_};
+
+        ok($endpoint eq $expected, $_ . ' hits ' . $expected . ' as expected');
     }
 }
 
