@@ -22,3 +22,7 @@ install:
    - "dzil listdeps   --author --missing | grep -vP '[^\\w:]' | xargs -n 5 -P 10 cpanm --quiet --notest"
 script:
    - dzil smoke --release --author
+env:
+  global:
+    - secure: Ly+TwA1UiJUKTZ+3Q9axtegoM3pC1zhotCN+iCtOcwGrY/ACmDUcw/7F6NExQ5Y+jeppF+T+CbYNtZrtB+wJcL6C9V+Ly1pTSt+cjWgkZUI2FLSW3XAfa9erFE1MsThhpuq4ZWKuLlu74k3XLL8L5rmPqxNK0khQwMTvrzDMjI4=
+    - secure: O2X7Xgfq4RUK0sSIc16sRZoSIQ4BA6apIgtrl+KTdUdQTZ8L6QoGhCln+npleYgW4i71yK6vrRNqnwVLau/G4N9fWMMj8RB3rlKA2f/ZRDFNQ+2CQwXGXUtlf1fEnyjJs2/1wEE3VkTgLUEjJmd76+tD1m+uBoLgJMJPabAKp5k=
