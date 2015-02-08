@@ -103,14 +103,14 @@ describe 'Saucelabs' => sub {
 };
 
 describe 'Authentication' => sub {
-    my %pristine_env = %ENV;
-    my %reset_env = %pristine_env;
+    my %default_env = %ENV;
 
-    delete $reset_env{SAUCE_USER};
-    delete $reset_env{SAUCE_ACCESS_KEY};
+    my %no_sauce_vars = %default_env;
+    delete $no_sauce_vars{SAUCE_USER};
+    delete $no_sauce_vars{SAUCE_ACCESS_KEY};
 
-    before each => sub { %ENV = %reset_env; };
-    after all => sub { %ENV = %pristine_env; };
+    before each => sub { %ENV = %no_sauce_vars; };
+    after all => sub { %ENV = %default_env; };
 
     describe failure => sub {
         it 'should throw without a user' => sub {
