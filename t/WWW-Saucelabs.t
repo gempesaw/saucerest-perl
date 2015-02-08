@@ -75,7 +75,7 @@ describe 'Saucelabs' => sub {
                         my $endpoint = $res->request->uri->as_string;
                         my $expected = $no_auth_endpoints->{$method_name};
 
-                        ok($endpoint eq $expected);
+                        cmp_ok($endpoint, 'eq', $expected);
                     }
                 }
             };
