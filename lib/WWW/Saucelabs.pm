@@ -61,7 +61,6 @@ has access_key => (
     }
 );
 
-
 my $spec = {
     name => 'Saucelabs REST API',
     formats => [ 'json' ],
@@ -69,28 +68,27 @@ my $spec = {
     methods => {
         get_job_assets => {
             method => 'GET',
-            required_params => [ 'user', 'job_id' ],
+            required_params => [ 'job_id' ],
             path => '/:user/jobs/:job_id/assets',
         },
         get_job_status => {
             method => 'GET',
-            required_params => [ 'user', 'job_id' ],
+            required_params => [ 'job_id' ],
             path => '/:user/jobs/job_id'
         },
         get_jobs => {
             method => 'GET',
-            required_params => [ 'user' ],
             optional_params => [ 'limit'    ],
             path => '/:user/jobs',
         },
         get_sauce_status => {
             method => 'GET',
-            required_params => [ 'user' ],
+            base_url => 'http://saucelabs.com/rest/v1',
             path => '/info/status',
         },
         set_job_status => {
             method => 'PUT',
-            required_params => [ 'user', 'job_id', 'status' ],
+            required_params => [ 'job_id', 'status' ],
             path => '/:user/jobs/:job_id'
         },
     }
@@ -116,9 +114,7 @@ has _spec => (
     lazy => 1,
     default => sub {
         my ($self) = @_;
-
         $spec->{base_url} = $self->_base_url;
-
         return $spec;
     }
 );
@@ -132,6 +128,9 @@ has _client => (
 
       my $knork = Net::HTTP::Knork->new(
           spec => to_json($self->_spec),
+          default_params => {
+              user => $self->user
+          }
       );
 
       return $knork;
