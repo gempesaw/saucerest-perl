@@ -1,6 +1,6 @@
 # NAME
 
-WWW::Saucelabs - A perl client to the Saucelabs REST API (WIP)
+WWW::Saucelabs - An incomplete, wip perl client to the Saucelabs REST API
 
 # VERSION
 
@@ -29,6 +29,18 @@ specifying it during construction.
 
 If there's no SAUCE\_ACCESS\_KEY environment variable, and you neglect to
 specify the access\_key during construciton, we will croak.
+
+# METHODS
+
+## fail\_job( $job\_id )
+
+Shortcut to set the status of a job to failure. `$job_id` should be a
+string.
+
+## pass\_job( $job\_id )
+
+Shortcut to set the status of a job to success. `$job_id` should be a
+string.
 
 # BUGS
 

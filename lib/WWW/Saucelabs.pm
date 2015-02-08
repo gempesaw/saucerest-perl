@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package WWW::Saucelabs;
 
-# ABSTRACT: A perl client to the Saucelabs REST API (WIP)
+# ABSTRACT: An incomplete, wip perl client to the Saucelabs REST API
 use Net::HTTP::Knork;
 use Carp qw/croak/;
 use JSON qw/to_json/;

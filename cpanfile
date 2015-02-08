@@ -9,7 +9,6 @@ requires "warnings" => "0";
 on 'test' => sub {
   requires "Test::Fatal" => "0";
   requires "Test::LWP::UserAgent" => "0";
-  requires "Test::More" => "0";
   requires "Test::Spec" => "0";
 };
 
