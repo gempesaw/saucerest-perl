@@ -1,4 +1,4 @@
 Revision history for perl module WWW-Saucelabs
 
-{{$NEXT}}
- -
+0.01 2014-02-07
+ - Partial spec implementation of Saucelabs API

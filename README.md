@@ -30,10 +30,6 @@ specifying it during construction.
 If there's no SAUCE\_ACCESS\_KEY environment variable, and you neglect to
 specify the access\_key during construciton, we will croak.
 
-## trace
-
-OPTIONAL: Set trace to 1 or 2 to see debugging output. Defaults to 0.
-
 # BUGS
 
 Please report any bugs or feature requests on the bugtracker website
