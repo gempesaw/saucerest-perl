@@ -13,9 +13,21 @@ use namespace::clean;
 
 =head1 SYNOPSIS
 
+    my $sauce = WWW::Saucelabs->new;
+
+    my $jobs = $sauce->get_jobs({limit => 5 });
+    map { say $_->{id} } @$jobs;
+
 =head1 DESCRIPTION
 
-=cut
+This module is an incomplete perl client for the L<Saucelabs REST
+API|https://docs.saucelabs.com/reference/rest-api/>. Saucelabs
+provides webdriver instances for automated testing in the cloud for
+CI.
+
+This module is perilously incomplete and we'd love for you to
+contribute. (We have no affiliation with Saucelabs other than we love
+using their services :D)
 
 =attr user
 
