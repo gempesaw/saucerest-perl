@@ -81,18 +81,19 @@ describe 'Saucelabs' => sub {
             };
         };
     };
+
+    describe 'base url' => sub {
+        my $expected_url = 'https://user:access@saucelabs.com/rest/v1';
+
+        it 'should be properly constructed' => sub {
+            is($c->_base_url, $expected_url);
+        };
+        it 'should be on the spec' => sub {
+            is($c->_spec->{base_url}, $expected_url);
+        };
+    };
 };
 
-BASE_URL: {
-    my $c = WWW::Saucelabs->new(
-        user => 'user',
-        access_key => 'access'
-    );
-
-    my $expected_url = 'https://user:access@saucelabs.com/rest/v1';
-    is($c->_base_url, $expected_url, 'we construct the base url correctly');
-    is($c->_spec->{base_url}, $expected_url, 'and put it on the spec');
-}
 
 AUTHENTICATION: {
     my %reset_env = %ENV;
