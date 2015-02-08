@@ -3,7 +3,7 @@ use warnings;
 
 use Test::LWP::UserAgent;
 use Test::Fatal;
-use Test::More;
+use Test::Spec;
 
 BEGIN: {
     unless (use_ok('WWW::Saucelabs')) {
@@ -12,41 +12,76 @@ BEGIN: {
     }
 }
 
-CLIENT: {
-    my $tua = Test::LWP::UserAgent->new;
-    my $return_endpoint = sub {
-        my ($req) = @_;
-        my $res = Net::HTTP::Knork::Response->new('200','OK');
-        $res->request( $req );
-        return $res;
+describe 'Saucelabs' => sub {
+    my $c;
+
+    before each => sub {
+        $c = WWW::Saucelabs->new(
+            user => 'user',
+            access_key => 'access'
+        );
     };
 
-    $tua->map_response(1, $return_endpoint);
-
-    my $c = WWW::Saucelabs->new(
-        user => 'user',
-        access_key => 'access-key',
-        _ua => $tua
-    );
-    ok($c->_client->isa('Net::HTTP::Knork'), 'we can build a knork');
-
-    my $methods = $c->_spec->{methods};
-    foreach (keys %$methods) {
-        ok($c->can($_), 'all spec methods are properly handled by the client');
-    }
-
-    my $no_auth_endpoints = {
-        get_sauce_status => 'http://saucelabs.com/rest/v1/info/status'
+    describe 'client' => sub {
+        it 'should be a knork' => sub {
+            ok($c->_client->isa('Net::HTTP::Knork'));
+        };
     };
 
-    foreach (keys %$no_auth_endpoints) {
-        my $res = $c->$_;
-        my $endpoint = $res->request->uri->as_string;;
-        my $expected = $no_auth_endpoints->{$_};
+    describe 'spec methods' => sub {
+        they 'should all be handled' => sub {
+            my $methods = $c->_spec->{methods};
+            my @missing = ();
 
-        ok($endpoint eq $expected, $_ . ' hits ' . $expected . ' as expected');
-    }
-}
+            foreach my $method_name (keys %$methods) {
+                unless ($c->can($method_name)) {
+                    push @missing, 'missing ' . $method_name . "\n"
+                }
+            }
+
+            print @missing if @missing;
+            is(scalar @missing, 0);
+        }
+    };
+
+    describe 'endpoints' => sub {
+        my ($mock_client, $tua, $return_endpoint);
+        before each => sub {
+            $tua = Test::LWP::UserAgent->new;
+            $return_endpoint = sub {
+                my ($req) = @_;
+                my $res = Net::HTTP::Knork::Response->new('200','OK');
+                $res->request( $req );
+                return $res;
+            };
+            $tua->map_response(1, $return_endpoint);
+
+            $mock_client = WWW::Saucelabs->new(
+                user => 'name',
+                access_key => 'access',
+                _ua => $tua
+            );
+        };
+
+        describe 'without auth' => sub {
+            my $no_auth_endpoints = {
+                get_sauce_status => 'http://saucelabs.com/rest/v1/info/status'
+            };
+
+            describe 'should use the correct endpoint:' => sub {
+                foreach my $method_name (keys %$no_auth_endpoints) {
+                    it $method_name => sub {
+                        my $res = $mock_client->$method_name;
+                        my $endpoint = $res->request->uri->as_string;;
+                        my $expected = $no_auth_endpoints->{$method_name};
+
+                        ok($endpoint eq $expected);
+                    }
+                }
+            };
+        };
+    };
+};
 
 BASE_URL: {
     my $c = WWW::Saucelabs->new(
@@ -92,4 +127,5 @@ AUTHENTICATION: {
     is($client->access_key, 'access-key', 'constructor overrides env access key');
 }
 
-done_testing;
+runtests;
+# done_testing;
