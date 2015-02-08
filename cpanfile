@@ -7,6 +7,7 @@ requires "strict" => "0";
 requires "warnings" => "0";
 
 on 'test' => sub {
+  requires "Data::Printer" => "0";
   requires "Test::Fatal" => "0";
   requires "Test::LWP::UserAgent" => "0";
   requires "Test::Spec" => "0";

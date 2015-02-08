@@ -185,7 +185,8 @@ describe 'E2E' => sub {
 
     it 'should get a list of jobs' => sub {
         my $jobs = $sauce->get_jobs({limit => 5 });
-        print $jobs->to_string;
+        use Data::Printer;
+        p $jobs;
         ok(scalar $jobs);
     };
 };
