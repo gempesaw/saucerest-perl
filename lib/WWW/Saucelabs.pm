@@ -127,6 +127,7 @@ Set the status of a given job to success or failure.
         set_job_status => {
             method => 'PUT',
             required_params => [ 'user', 'job_id' ],
+            required_payload => JSON::true,
             path => '/:user/jobs/:job_id'
         },
 
