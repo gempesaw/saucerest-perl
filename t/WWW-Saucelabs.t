@@ -94,39 +94,51 @@ describe 'Saucelabs' => sub {
     };
 };
 
+describe 'Authentication' => sub {
+    my %pristine_env = %ENV;
+    my %reset_env = %pristine_env;
 
-AUTHENTICATION: {
-    my %reset_env = %ENV;
+    delete $reset_env{SAUCE_USER};
+    delete $reset_env{SAUCE_ACCESS_KEY};
 
-    %ENV = %reset_env;
-    $ENV{SAUCE_ACCESS_KEY} = 'fake-access-key';
-    like(exception { WWW::Saucelabs->new }, qr/SAUCE_USER/, 'we throw about missing a user');
+    before each => sub { %ENV = %reset_env; };
+    after all => sub { %ENV = %pristine_env; };
 
-    %ENV = %reset_env;
-    $ENV{SAUCE_USER} = 'fake-sauce-user';
-    like(exception { WWW::Saucelabs->new }, qr/SAUCE_ACCESS_KEY/, 'we throw about missing an access key');
+    describe failure => sub {
+        it 'should throw without a user' => sub {
+            $ENV{SAUCE_ACCESS_KEY} = 'fake-access-key';
+            like(exception { WWW::Saucelabs->new }, qr/SAUCE_USER/);
+        };
 
-    %ENV = %reset_env;
-    $ENV{SAUCE_USER} = 'fake-sauce-user';
-    $ENV{SAUCE_ACCESS_KEY} = 'fake-access-key';
-    my $env_client;
-    is(exception { $env_client = WWW::Saucelabs->new }, undef, 'can get setup solely from env vars');
-    is($env_client->user, 'fake-sauce-user', 'constructor overrides env user');
-    is($env_client->access_key, 'fake-access-key', 'constructor overrides env access key');
+        it 'should throw without an access key' => sub {
+            $ENV{SAUCE_USER} = 'fake-sauce-user';
+            like(exception { WWW::Saucelabs->new }, qr/SAUCE_ACCESS_KEY/);
+        };
+    };
 
-    %ENV = %reset_env;
-    my $client;
-    is(exception {
-        $client = WWW::Saucelabs->new(
-            user => 'user',
-            access_key => 'access-key'
-        );
-    },
-       undef,
-       'can get set up solely from instantiation');
-    is($client->user, 'user', 'constructor overrides env user');
-    is($client->access_key, 'access-key', 'constructor overrides env access key');
-}
+    describe 'success' => sub {
+        my ($env_client, $user, $access);
+        $user = 'env-user';
+        $access = 'env-access';
+
+        before each => sub {
+            $ENV{SAUCE_USER} = $user;
+            $ENV{SAUCE_ACCESS_KEY} = $access;
+        };
+
+        it 'should be able to find everything in env vars' => sub {
+            is(exception { $env_client = WWW::Saucelabs->new }, undef);
+        };
+
+        it 'should override env vars with constructor opts' => sub {
+            $env_client = WWW::Saucelabs->new(
+                user => 'user',
+                access_key => 'access_key'
+            );
+            is($env_client->user, 'user');
+            is($env_client->access_key, 'access_key');
+        };
+    };
+};
 
 runtests;
-# done_testing;
