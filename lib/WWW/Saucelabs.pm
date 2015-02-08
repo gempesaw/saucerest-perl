@@ -68,28 +68,29 @@ my $spec = {
     methods => {
         get_job_assets => {
             method => 'GET',
-            required_params => [ 'job_id' ],
+            required_params => [ 'user', 'job_id' ],
             path => '/:user/jobs/:job_id/assets',
         },
         get_job_status => {
             method => 'GET',
-            required_params => [ 'job_id' ],
+            required_params => [ 'user', 'job_id' ],
             path => '/:user/jobs/job_id'
         },
         get_jobs => {
             method => 'GET',
+            required_params => [ 'user' ],
             optional_params => [ 'limit' ],
             path => '/:user/jobs',
+        },
+        set_job_status => {
+            method => 'PUT',
+            required_params => [ 'user', 'job_id', 'status' ],
+            path => '/:user/jobs/:job_id'
         },
         get_sauce_status => {
             method => 'GET',
             base_url => 'http://saucelabs.com/rest/v1',
             path => '/info/status',
-        },
-        set_job_status => {
-            method => 'PUT',
-            required_params => [ 'job_id', 'status' ],
-            path => '/:user/jobs/:job_id'
         },
     }
 };
