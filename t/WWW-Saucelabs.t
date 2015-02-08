@@ -88,6 +88,33 @@ describe 'Saucelabs' => sub {
                 cmp_ok($endpoint, '=~', qr{/rest/v1/user});
             };
         };
+
+        describe 'for jobs' => sub {
+            my $job_id = 'job_id';
+            they 'should be fail-able' => sub {
+                my $res = $mock_client->fail_job($job_id);
+                my $endpoint = $res->request->uri->path;
+                cmp_ok($endpoint, '=~', qr{/user/.*/$job_id});
+            };
+
+            they 'should be pass-able' => sub {
+                my $res = $mock_client->pass_job($job_id);
+                my $endpoint = $res->request->uri->path;
+                cmp_ok($endpoint, '=~', qr{/user/.*/$job_id});
+            };
+
+            they 'should have a body when passing' => sub {
+                my $res = $mock_client->pass_job($job_id);
+                my $body = $res->request->body;
+                ok($body->{status});
+            };
+
+            they 'should have a body when passing' => sub {
+                my $res = $mock_client->fail_job($job_id);
+                my $body = $res->request->body;
+                ok(! $body->{status});
+            };
+        };
     };
 
     describe 'base url' => sub {

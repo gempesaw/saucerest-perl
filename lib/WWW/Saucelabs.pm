@@ -84,7 +84,7 @@ my $spec = {
         },
         set_job_status => {
             method => 'PUT',
-            required_params => [ 'user', 'job_id', 'status' ],
+            required_params => [ 'user', 'job_id' ],
             path => '/:user/jobs/:job_id'
         },
         get_sauce_status => {
@@ -143,5 +143,44 @@ has _ua => (
     is => 'ro',
     default => sub { LWP::UserAgent->new }
 );
+
+=method fail_job( $job_id )
+
+Shortcut to set the status of a job to failure. C<$job_id> should be a
+string.
+
+=cut
+
+sub fail_job {
+    my ($self, $job) = @_;
+    croak 'We need a job to fail' unless $job;
+
+    $self->set_job_status({
+        job_id => $job,
+        payload => {
+            status => JSON::false
+        }
+    });
+}
+
+=method pass_job( $job_id )
+
+Shortcut to set the status of a job to success. C<$job_id> should be a
+string.
+
+=cut
+
+sub pass_job {
+    my ($self, $job) = @_;
+    croak 'We need a job to pass' unless $job;
+
+    $self->set_job_status({
+        job_id => $job,
+        payload => {
+            status => JSON::true
+        }
+    }
+    );
+}
 
 1;
