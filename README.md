@@ -58,6 +58,28 @@ string.
 Shortcut to set the status of a job to success. `$job_id` should be a
 string.
 
+# IMPLEMENTED ENDPOINTS
+
+## get\_job\_assets({ job\_id => $job\_id })
+
+Retrieve the assets for a given job id.
+
+## get\_job\_status({ job\_id => $job\_id })
+
+Retrieve the status of a given job by its job\_id.
+
+## get\_jobs
+
+Retrieve a list of available jobs
+
+## set\_job\_status({ job\_id => $job\_id, payload => { passed => JSON::true|JSON::false } })
+
+Set the status of a given job to success or failure.
+
+## get\_sauce\_status
+
+Get the current status of the Saucelabs service.
+
 # BUGS
 
 Please report any bugs or feature requests on the bugtracker website
