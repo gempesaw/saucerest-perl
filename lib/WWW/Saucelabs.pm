@@ -78,7 +78,7 @@ my $spec = {
         },
         get_jobs => {
             method => 'GET',
-            optional_params => [ 'limit'    ],
+            optional_params => [ 'limit' ],
             path => '/:user/jobs',
         },
         get_sauce_status => {
@@ -122,7 +122,7 @@ has _spec => (
 has _client => (
   is => 'ro',
   lazy => 1,
-  handles => [ keys $spec->{methods} ],
+  handles => [ keys %{ $spec->{methods} } ],
   builder => sub {
       my ($self) = @_;
 
