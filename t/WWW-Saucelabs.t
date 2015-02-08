@@ -57,7 +57,7 @@ describe 'Saucelabs' => sub {
             $tua->map_response(1, $return_endpoint);
 
             $mock_client = WWW::Saucelabs->new(
-                user => 'name',
+                user => 'user',
                 access_key => 'access',
                 _ua => $tua
             );
@@ -78,6 +78,14 @@ describe 'Saucelabs' => sub {
                         ok($endpoint eq $expected);
                     }
                 }
+            };
+        };
+
+        describe 'with auth' => sub {
+            it 'should have the username in the path' => sub {
+                my $res = $mock_client->get_jobs;
+                my $endpoint = $res->request->uri->path;
+                cmp_ok($endpoint, '=~', qr{/rest/v1/user});
             };
         };
     };
