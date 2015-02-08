@@ -2,6 +2,8 @@
 
 WWW::Saucelabs - An incomplete, wip perl client to the Saucelabs REST API
 
+[![Build Status](https://travis-ci.org/gempesaw/saucerest-perl.svg?branch=master)](https://travis-ci.org/gempesaw/saucerest-perl)
+
 # VERSION
 
 version 0.01

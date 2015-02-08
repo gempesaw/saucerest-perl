@@ -9,6 +9,8 @@ use JSON qw/to_json/;
 use Moo;
 use namespace::clean;
 
+=for markdown [![Build Status](https://travis-ci.org/gempesaw/saucerest-perl.svg?branch=master)](https://travis-ci.org/gempesaw/saucerest-perl)
+
 =head1 SYNOPSIS
 
 =head1 DESCRIPTION
