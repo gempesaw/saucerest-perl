@@ -17,10 +17,10 @@ version 0.01
 ## user
 
 REQUIRED: pass in your Saucelabs user. Alternatively, you can
-export it to the environment variable SAUCE\_USER in place of
+export it to the environment variable SAUCE\_USERNAME in place of
 specifying it during construction.
 
-If there's no SAUCE\_USER environment variable, and you neglect to
+If there's no SAUCE\_USERNAME environment variable, and you neglect to
 specify the user during construciton, we will croak.
 
 ## access\_key

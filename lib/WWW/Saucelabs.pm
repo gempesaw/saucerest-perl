@@ -20,10 +20,10 @@ use namespace::clean;
 =attr user
 
 REQUIRED: pass in your Saucelabs user. Alternatively, you can
-export it to the environment variable SAUCE_USER in place of
+export it to the environment variable SAUCE_USERNAME in place of
 specifying it during construction.
 
-If there's no SAUCE_USER environment variable, and you neglect to
+If there's no SAUCE_USERNAME environment variable, and you neglect to
 specify the user during construciton, we will croak.
 
 =cut
@@ -31,11 +31,11 @@ specify the user during construciton, we will croak.
 has user => (
     is => 'ro',
     default => sub {
-        if (exists $ENV{SAUCE_USER} && $ENV{SAUCE_USER}) {
-            return $ENV{SAUCE_USER};
+        if (exists $ENV{SAUCE_USERNAME} && $ENV{SAUCE_USERNAME}) {
+            return $ENV{SAUCE_USERNAME};
         }
         else {
-            croak 'You must specify a user, or set the environment variable SAUCE_USER';
+            croak 'You must specify a user, or set the environment variable SAUCE_USERNAME';
         }
     }
 );

@@ -133,7 +133,7 @@ describe 'Authentication' => sub {
     my %default_env = %ENV;
 
     my %no_sauce_vars = %default_env;
-    delete $no_sauce_vars{SAUCE_USER};
+    delete $no_sauce_vars{SAUCE_USERNAME};
     delete $no_sauce_vars{SAUCE_ACCESS_KEY};
 
     before each => sub { %ENV = %no_sauce_vars; };
@@ -142,11 +142,11 @@ describe 'Authentication' => sub {
     describe failure => sub {
         it 'should throw without a user' => sub {
             $ENV{SAUCE_ACCESS_KEY} = 'fake-access-key';
-            like(exception { WWW::Saucelabs->new }, qr/SAUCE_USER/);
+            like(exception { WWW::Saucelabs->new }, qr/SAUCE_USERNAME/);
         };
 
         it 'should throw without an access key' => sub {
-            $ENV{SAUCE_USER} = 'fake-sauce-user';
+            $ENV{SAUCE_USERNAME} = 'fake-sauce-user';
             like(exception { WWW::Saucelabs->new }, qr/SAUCE_ACCESS_KEY/);
         };
     };
@@ -157,7 +157,7 @@ describe 'Authentication' => sub {
         $access = 'env-access';
 
         before each => sub {
-            $ENV{SAUCE_USER} = $user;
+            $ENV{SAUCE_USERNAME} = $user;
             $ENV{SAUCE_ACCESS_KEY} = $access;
         };
 
