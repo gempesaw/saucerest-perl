@@ -72,7 +72,7 @@ describe 'Saucelabs' => sub {
                 foreach my $method_name (keys %$no_auth_endpoints) {
                     it $method_name => sub {
                         my $res = $mock_client->$method_name;
-                        my $endpoint = $res->request->uri->as_string;;
+                        my $endpoint = $res->request->uri->as_string;
                         my $expected = $no_auth_endpoints->{$method_name};
 
                         ok($endpoint eq $expected);
