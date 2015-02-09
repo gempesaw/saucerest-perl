@@ -75,11 +75,7 @@ has access_key => (
     }
 );
 
-my $spec = {
-    name => 'Saucelabs REST API',
-    formats => [ 'json' ],
-    version => '0.1',
-    methods => {
+my $methods = {};
 
 =endpoint get_job_assets({ job_id => $job_id })
 
@@ -87,11 +83,11 @@ Retrieve the assets for a given job id.
 
 =cut
 
-        get_job_assets => {
-            method => 'GET',
-            required_params => [ 'user', 'job_id' ],
-            path => '/:user/jobs/:job_id/assets',
-        },
+$methods->{get_job_assets} = {
+    method => 'GET',
+    required_params => [ 'user', 'job_id' ],
+    path => '/:user/jobs/:job_id/assets',
+};
 
 =endpoint get_job_status({ job_id => $job_id })
 
@@ -99,11 +95,11 @@ Retrieve the status of a given job by its job_id.
 
 =cut
 
-        get_job_status => {
-            method => 'GET',
-            required_params => [ 'user', 'job_id' ],
-            path => '/:user/jobs/job_id'
-        },
+$methods->{get_job_status} = {
+    method => 'GET',
+    required_params => [ 'user', 'job_id' ],
+    path => '/:user/jobs/job_id'
+};
 
 =endpoint get_jobs
 
@@ -111,12 +107,12 @@ Retrieve a list of available jobs
 
 =cut
 
-        get_jobs => {
-            method => 'GET',
-            required_params => [ 'user' ],
-            optional_params => [ 'limit' ],
-            path => '/:user/jobs',
-        },
+$methods->{get_jobs} = {
+    method => 'GET',
+    required_params => [ 'user' ],
+    optional_params => [ 'limit' ],
+    path => '/:user/jobs',
+};
 
 =endpoint set_job_status({ job_id => $job_id, payload => { passed => JSON::true|JSON::false } })
 
@@ -124,12 +120,12 @@ Set the status of a given job to success or failure.
 
 =cut
 
-        set_job_status => {
-            method => 'PUT',
-            required_params => [ 'user', 'job_id' ],
-            required_payload => JSON::true,
-            path => '/:user/jobs/:job_id'
-        },
+$methods->{set_job_status} = {
+    method => 'PUT',
+    required_params => [ 'user', 'job_id' ],
+    required_payload => JSON::true,
+    path => '/:user/jobs/:job_id'
+};
 
 =endpoint get_sauce_status
 
@@ -137,12 +133,17 @@ Get the current status of the Saucelabs service.
 
 =cut
 
-        get_sauce_status => {
-            method => 'GET',
-            base_url => 'http://saucelabs.com/rest/v1',
-            path => '/info/status',
-        },
-    }
+$methods->{get_sauce_status} = {
+    method => 'GET',
+    base_url => 'http://saucelabs.com/rest/v1',
+    path => '/info/status',
+};
+
+my $spec = {
+    name => 'Saucelabs REST API',
+    formats => [ 'json' ],
+    version => '0.1',
+    methods => $methods
 };
 
 has _base_url => (
