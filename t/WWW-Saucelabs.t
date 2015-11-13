@@ -176,7 +176,7 @@ describe 'Authentication' => sub {
     };
 };
 
-describe 'E2E' => sub {
+xdescribe 'E2E' => sub {
     # $ export SAUCE_USERNAME=your-sauce-user
     # $ export SAUCE_ACCESS_KEY=your-sauce-access-key
     my $sauce;
@@ -185,8 +185,6 @@ describe 'E2E' => sub {
 
     it 'should get a list of jobs' => sub {
         my $jobs = $sauce->get_jobs({limit => 5 });
-        use Data::Printer;
-        p $jobs;
         ok(scalar $jobs);
     };
 };
