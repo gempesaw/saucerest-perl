@@ -6,7 +6,7 @@ WWW::Saucelabs - An incomplete, wip perl client to the Saucelabs REST API
 
 # VERSION
 
-version 0.01
+version 0.02
 
 # SYNOPSIS
 
@@ -72,7 +72,7 @@ Retrieve the status of a given job by its job\_id.
 
 Retrieve a list of available jobs
 
-## set\_job\_status({ job\_id => $job\_id, payload => { passed => JSON::true|JSON::false } })
+## set\_job\_status({ job\_id => $job\_id, status => JSON::true|JSON::false })
 
 Set the status of a given job to success or failure.
 

@@ -114,7 +114,7 @@ $methods->{get_jobs} = {
     path => '/:user/jobs',
 };
 
-=endpoint set_job_status({ job_id => $job_id, payload => { passed => JSON::true|JSON::false } })
+=endpoint set_job_status({ job_id => $job_id, status => JSON::true|JSON::false })
 
 Set the status of a given job to success or failure.
 
@@ -123,7 +123,7 @@ Set the status of a given job to success or failure.
 $methods->{set_job_status} = {
     method => 'PUT',
     required_params => [ 'user', 'job_id' ],
-    required_payload => JSON::true,
+    required_payload => [ 'status' ],
     path => '/:user/jobs/:job_id'
 };
 
@@ -208,9 +208,7 @@ sub fail_job {
 
     $self->set_job_status({
         job_id => $job,
-        payload => {
-            status => JSON::false
-        }
+        status => JSON::false
     });
 }
 
@@ -227,11 +225,8 @@ sub pass_job {
 
     $self->set_job_status({
         job_id => $job,
-        payload => {
-            status => JSON::true
-        }
-    }
-    );
+        status => JSON::true
+    });
 }
 
 1;
