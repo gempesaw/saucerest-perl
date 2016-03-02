@@ -6,7 +6,7 @@ WWW::Saucelabs - An incomplete, wip perl client to the Saucelabs REST API
 
 # VERSION
 
-version 0.02
+version 0.0201
 
 # SYNOPSIS
 
